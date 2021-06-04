@@ -29,11 +29,11 @@ int main(){
 
   while(strcmp(input, "q") != 0){
     cout << "----------------------------" << endl;
-    cout << "valid commands are: " << endl;
+    cout << "valid commands (so far) are: " << endl;
     cout << "addv - add vertex (trail head) " << endl;
     cout << "adde - add edge (trail)" << endl;
-    cout << "dlist - display all nodes adjacent to a certain node" << endl;
-    cout << "dall - display all nodes in the adjacency matrix" << endl;
+    //    cout << "dlist - display all nodes adjacent to a certain node" << endl;
+    //    cout << "dall - display all nodes in the adjacency matrix" << endl;
     cout << "q - quit " << endl;
     cout << "> ";
     cin.get(input, 20);

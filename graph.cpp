@@ -17,6 +17,7 @@
    the each index in the vertex array to null and sets list size. */
 graph::graph(){
   list_size = SIZE;
+  array = new vertex*[SIZE];
   for(int i = 0; i < list_size; i++){
     array[i] = NULL;
   }
@@ -53,9 +54,12 @@ void graph::deallocate_all(){
    
 int graph::add_vertex(char* name){
   //first check if that vertex already exists
-  for(int i = 0; i < list_size; i++){
-    if(strcmp(name, array[i]->label) == 0){
-      return -1;
+
+  if(array[0] != NULL){
+    for(int i = 0; i < list_size; i++){
+      if(strcmp(name, array[i]->label) == 0){
+	return -1;
+      }
     }
   }
   return add_vertex(array[0], name);
@@ -65,7 +69,6 @@ int graph::add_vertex(char* name){
    and adds in the vertex. If the table is full, it returns 0. */
 int graph::add_vertex(vertex* current, char* name){
   bool flag = false; // a flag to see if the array is completely full
-  
   //walk through the table
   for(int i = 0; i < list_size; i++){
     if(array[i] != NULL){ //found an open slot
