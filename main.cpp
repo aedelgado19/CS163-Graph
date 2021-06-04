@@ -9,7 +9,7 @@
  */
 #include <iostream>
 #include <cstring>
-#include "graph."
+#include "graph.h"
 using namespace std;
 
 void print_error_messages(int success, const char function_name[]);
@@ -21,8 +21,7 @@ int main(){
   char name[150];
   int length = 0;
   int difficulty = 0;
-  char first[150];
-  char second[150];
+  char connect[150];
   cout << " " << endl;
   cout << "******************************" << endl;
   cout << "Welcome to Trail Searcher." << endl;
@@ -62,15 +61,11 @@ int main(){
       cout << "> ";
       cin >> difficulty;
       cin.get();
-      cout << "Enter the first trailhead this connects to. " << endl;
+      cout << "What trailhead does this trail connect to?" << endl;
       cout << "> ";
-      cin.get(first, 150);
+      cin.get(connect, 150);
       cin.get();
-      cout << "Enter the second trailhead this connects to." << endl;
-      cout << "> ";
-      cin.get(second, 150);
-      cin.get();
-      success = new_graph->add_edge(length, difficulty, first, second);
+      success = new_graph->add_edge(length, difficulty, connect);
       print_error_messages(success, "edge");
     }
   }
@@ -78,7 +73,7 @@ int main(){
   return 0;
 }
 
-void print_error_messages(bool success, const char function_name[]){
+void print_error_messages(int success, const char function_name[]){
   if(success == 1){ //successful
     if(strcmp(function_name, "vertex") == 0){
       cout << "Trail head added successfully." << endl;
