@@ -28,15 +28,25 @@ graph::graph(){
    dynamic memory. */
 graph::~graph(){
   node* current = NULL;
-  
-  for(int i = 0; i < list_size; i++){
-    current = array[i]->head;
-    while(current->next){
-      node* temp = current->next;
-      delete current;
-      current = temp;
+
+  if(!array[0]){ //if there's nothing in the array
+    return;
+  } else {
+    for(int i = 0; i < list_size; i++){
+      if(array[i]){
+	current = array[i]->head;
+      }
+      if(current){
+	while(current->next){
+	  node* temp = current->next;
+	  delete current;
+	  current = temp;
+	}
+      }
+      if(array[i]){
+	delete [] array[i]->label;
+      }
     }
-    delete [] array[i]->label;
   }
 }
 
@@ -80,6 +90,7 @@ int graph::add_vertex(vertex* current, char* name, int i){
     new_vertex->label = new char[150];
     strcpy(new_vertex->label, name);
     new_vertex->head = NULL;
+    array[i] = new_vertex;
     return 1;
   }
   return 0;
