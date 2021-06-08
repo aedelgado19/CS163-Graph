@@ -94,9 +94,9 @@ int graph::add_vertex(vertex* current, char* name, int i){
   return 1;
 }
 
-/* a wrapper function to add an edge node to the graph.
-   The wrapper creates a new node, then sends the node to
-   the recursive version of the function. */
+/* a function to add an edge node to the graph.
+   This function searches to see if the connection points exist,
+   then if they do it adds the new node into the adjacency list. */
 int graph::add_edge(int length, int difficulty, char* connect1, char* connect2){
   bool flag1 = false; //flag to see if the first connection point exists
   bool flag2 = false; //flag to see if the second connection point exists
@@ -116,30 +116,24 @@ int graph::add_edge(int length, int difficulty, char* connect1, char* connect2){
     }
   }
   if(flag1 == false || flag2 == false) return 0; //couldn't find one or both of them
+  
+  //create the new node
   node* new_node = new node;
   new_node->length = length;
   new_node->difficulty = difficulty;
   new_node->connection = array[index2];
   new_node->next = NULL;
-  add_edge(index1, new_node, array[index1]->head);
-  return 1;
-}
-
-/* this function finds the vertex node in the
-   array and chains itself onto its LLL.
-   If it cannot find the vertex given, it will return 0.
-   the integer is the index at which the node should be connected to. */
-int graph::add_edge(int index, node*& to_add, node* current){
-  std::cout << "here " << std::endl;
-  if(!array[index]) return 0;
-  if(!current) return 0;
-  if(current->next){
-    std::cout << "recurring" << std::endl;
-    add_edge(index, to_add, current->next);
-  } else {
-    std::cout << "woo" << std::endl;
-    current->next = to_add;
+  
+  //add it into the adjacency list
+  node* current = array[index1]->head;
+  if(!current){
+    array[index1]->head = new_node;
+    return 1;
   }
+  while(current->next){
+    current = current->next;
+  }
+  current->next = new_node;
   return 1;
 }
 
@@ -177,7 +171,7 @@ int graph::display_adjacent(node* current){
     std::cout << current->connection->label << std::endl;
     return 1;
   }
-  return 0;
+  return 1;
 }
 
 /* a wrapper function to display all the nodes

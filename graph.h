@@ -47,7 +47,6 @@ class graph {
   
   //the recursive version of each function:
   int add_vertex(vertex* current, char* name, int i);
-  int add_edge(int index, node*& to_add, node* current);
   int display_adjacent(node* current);
   int display_all(node* current);
 };
