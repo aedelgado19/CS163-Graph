@@ -54,7 +54,7 @@ int main(){
     }
 
     if(strcmp(input, "adde") == 0){
-      cout << "Enter the length of the trail." << endl;
+      cout << "Enter the length of the trail. (an integer value)" << endl;
       cout << "> ";
       cin >> length;
       cin.get();
@@ -69,6 +69,7 @@ int main(){
       cout << "What is the second trailhead this trail connects to?" << endl;
       cout << "> ";
       cin.get(connect2, 150);
+      cin.get();
       success = new_graph->add_edge(length, difficulty, connect1, connect2);
       print_error_messages(success, "edge");
     }

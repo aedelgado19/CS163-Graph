@@ -104,21 +104,18 @@ int graph::add_edge(int length, int difficulty, char* connect1, char* connect2){
   int index2 = 0; //the index of the second connection point
 
   if(!array[0]) return 0;
-  std::cout << "b" << std::endl;
   //find the vertex that it connects to
   for(int i = 0; i < list_size; i++){
-    std::cout << "b1" << std::endl;
-    if(array[i] && strcmp(array[i]->label, connect1) == 0){
+    if(array[i] && strcmp(array[i]->label, connect1) == 0){ //first connection point
       flag1 = true;
       index1 = i;
     }
-    if(array[i] && strcmp(array[i]->label, connect2) == 0){
+    if(array[i] && strcmp(array[i]->label, connect2) == 0){ //second connection point
       flag2 = true;
       index2 = i;
     }
   }
-  if(flag1 == false || flag2 == false) return 0;
-  std::cout << "c" << std::endl;
+  if(flag1 == false || flag2 == false) return 0; //couldn't find one or both of them
   node* new_node = new node;
   new_node->length = length;
   new_node->difficulty = difficulty;
@@ -133,10 +130,14 @@ int graph::add_edge(int length, int difficulty, char* connect1, char* connect2){
    If it cannot find the vertex given, it will return 0.
    the integer is the index at which the node should be connected to. */
 int graph::add_edge(int index, node*& to_add, node* current){
+  std::cout << "here " << std::endl;
   if(!array[index]) return 0;
+  if(!current) return 0;
   if(current->next){
+    std::cout << "recurring" << std::endl;
     add_edge(index, to_add, current->next);
   } else {
+    std::cout << "woo" << std::endl;
     current->next = to_add;
   }
   return 1;
@@ -210,7 +211,6 @@ int graph::display_all(node* current){
     std::cout << "Name: " << current->connection->label << std::endl;
     std::cout << "   length: " << current->length << std::endl;
     std::cout << "   difficulty: " << current->difficulty << std::endl;
-  }
-  
-  return 0;
+  }  
+  return 1;
 }
