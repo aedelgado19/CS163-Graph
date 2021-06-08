@@ -5,7 +5,7 @@
    maintaining the rules of data abstraction (no nodes or anything
    are passed as arguments).
    
-   Last updated: May 29, 2021
+   Last updated: June 7, 2021
  */
 #include <iostream>
 #include <cstring>
@@ -32,8 +32,8 @@ int main(){
     cout << "valid commands (so far) are: " << endl;
     cout << "addv - add vertex (trail head) " << endl;
     cout << "adde - add edge (trail)" << endl;
-    //    cout << "dlist - display all nodes adjacent to a certain node" << endl;
-    //    cout << "dall - display all nodes in the adjacency matrix" << endl;
+    cout << "dlist - display all nodes adjacent to a certain node" << endl;
+    cout << "dall - display all nodes in the adjacency matrix" << endl;
     cout << "q - quit " << endl;
     cout << "> ";
     cin.get(input, 20);
@@ -72,6 +72,20 @@ int main(){
       success = new_graph->add_edge(length, difficulty, connect1, connect2);
       print_error_messages(success, "edge");
     }
+
+    if(strcmp(input, "dall") == 0){
+      success = new_graph->display_all();
+      print_error_messages(success, "display");
+    }
+
+    if(strcmp(input, "dlist") == 0){
+      cout << "Enter the trail you would like to display all adjacent trails for" << endl;
+      cout << "> ";
+      cin.get(name, 150);
+      cin.get();
+      success = new_graph->display_adjacent(name);
+      print_error_messages(success, "display");
+    }
   }
   delete new_graph;
   return 0;
@@ -96,8 +110,16 @@ void print_error_messages(int success, const char function_name[]){
       cout << "Could not add that vertex, max amount has already been reached." << endl;
       cout << " " << endl;
     }
-  } else { //special case failure
+    if(strcmp(function_name, "display") == 0){
+      cout << "Nothing to display." << endl;
+      cout << " " << endl;
+    }
+  } else if(success == -1) { //special case failure
     cout << "That vertex already exists - so you can't add it again." << endl;
+    cout << " " << endl;
+  }
+  else { //another special case failure
+    cout << "The trail list is completely full, so you cannot add more trails." << endl;
     cout << " " << endl;
   }
 }

@@ -6,7 +6,7 @@
    in the application of a trail organizer where a vertex
    is a trail head and an edge represents the trail.
 
-   Last updated: June 3, 2021
+   Last updated: June 7, 2021
  */
 #include <iostream>
 #include <cstring>
@@ -27,14 +27,6 @@ graph::graph(){
    It calls a function to deallocate all 
    dynamic memory. */
 graph::~graph(){
-  deallocate_all();
-}
-
-/* a function to deallocate all
-   dynamic memory from the graph. It first stops 
-   at every array index then deletes each node in the 
-   vertex's edge chain */
-void graph::deallocate_all(){
   node* current = NULL;
   
   for(int i = 0; i < list_size; i++){
@@ -53,34 +45,44 @@ void graph::deallocate_all(){
    is existing. */
    
 int graph::add_vertex(char* name){
-  //first check if that vertex already exists
+  bool full = true; //a flag to see if the entire array is already full
+  
+  //first check if that vertex already exists or if the array is completely full
 
-  if(array[0] != NULL){
-    for(int i = 0; i < list_size; i++){
-      if(strcmp(name, array[i]->label) == 0){
-	return -1;
-      }
+  for(int i = 0; i < list_size; i++){
+    if(array[i] && strcmp(name, array[i]->label) == 0){
+      return -1;
+    }
+    if(!array[i]){ //found a null spot so the array isn't completely full
+      full = false;
+      break;
     }
   }
-  return add_vertex(array[0], name);
+
+  if(full == false){
+    return add_vertex(array[0], name, 0);
+  } else {
+    return -2;
+  }
 }
 
 /* this function finds the next available slot
-   and adds in the vertex. If the table is full, it returns 0. */
-int graph::add_vertex(vertex* current, char* name){
-  bool flag = false; // a flag to see if the array is completely full
-  //walk through the table
-  for(int i = 0; i < list_size; i++){
-    if(array[i] != NULL){ //found an open slot
-      flag = true;
-      vertex* new_vertex = new vertex;
-      new_vertex->label = new char[150];
-      strcpy(new_vertex->label, name);
-      new_vertex->head = NULL;
-    }
+   and adds in the vertex. If the table is full, it returns 0.
+   the iterator is an integer that is incremented to walk through the array*/
+int graph::add_vertex(vertex* current, char* name, int i){
+  //recur if the current spot is taken
+  if(array[i]){
+    i++;
+    add_vertex(array[i+1], name, i);
   }
-  if(flag == false) return 0;
-  return 1;
+  else { //found an open slot (it's null so there's nothing there)
+    vertex* new_vertex = new vertex;
+    new_vertex->label = new char[150];
+    strcpy(new_vertex->label, name);
+    new_vertex->head = NULL;
+    return 1;
+  }
+  return 0;
 }
 
 /* a wrapper function to add an edge node to the graph.
@@ -135,7 +137,7 @@ int graph::add_edge(vertex* connect, node*& to_add){
 }
 
 int graph::display_adjacent(char* name){
-
+  
   return 0;
 }
 

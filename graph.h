@@ -7,7 +7,7 @@
    where a vertex is a trail head and an edge represents
    the trail.
 
-   Last updated: May 29, 2021 */
+   Last updated: June 7, 2021 */
 
 struct node {
   int length;
@@ -46,9 +46,8 @@ class graph {
   int list_size;
   
   //the recursive version of each function:
-  int add_vertex(vertex* current, char* name);
+  int add_vertex(vertex* current, char* name, int i);
   int add_edge(vertex* connect, node*& to_add);
   int display_adjacent(vertex* current, char* name);
   int display_all(vertex* current);
-  void deallocate_all(); //called by the destructor
 };
