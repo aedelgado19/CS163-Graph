@@ -106,10 +106,6 @@ void print_error_messages(int success, const char function_name[]){
       cout << "Could not add that trail. " << endl;
       cout << " " << endl;
     }
-    if(strcmp(function_name, "vertex") == 0){
-      cout << "Could not add that vertex, max amount has already been reached." << endl;
-      cout << " " << endl;
-    }
     if(strcmp(function_name, "display") == 0){
       cout << "Nothing to display." << endl;
       cout << " " << endl;
@@ -118,7 +114,7 @@ void print_error_messages(int success, const char function_name[]){
     cout << "That vertex already exists - so you can't add it again." << endl;
     cout << " " << endl;
   }
-  else { //another special case failure
+  else if(success == -2) { //another special case failure
     cout << "The trail list is completely full, so you cannot add more trails." << endl;
     cout << " " << endl;
   }
